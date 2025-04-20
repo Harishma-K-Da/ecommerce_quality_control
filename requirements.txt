@@ -1,5 +1,6 @@
-gradio
-tensorflow
-numpy
-Pillow
-
+matplotlib==3.7.1  
+numpy==1.23.5  
+opencv-python==4.8.0.76  
+Pillow==9.5.0  
+streamlit==1.25.0  
+tensorflow==2.10.0
