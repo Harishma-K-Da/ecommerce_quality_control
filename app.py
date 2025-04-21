@@ -4,17 +4,22 @@ import numpy as np
 import tensorflow as tf
 import cv2
 
-# Load the fine-tuned model
-model = tf.keras.models.load_model(r"C:\Users\DELL\Downloads\ecommerce_quality_control\data\fine_tuned_model.h5")
+# Define constants
 IMG_SIZE = (224, 224)
-class_names = ['Blurry', 'Correct']  # Modify if you have different classes
+class_names = ['Blurry', 'Correct']  # Modify if needed
 
+# Load the fine-tuned model with the correct absolute path
+model_path = r"C:\Users\DELL\Desktop\e_commerce_quality_control\part_a\fine_tuned_model.h5"
+model = tf.keras.models.load_model(model_path)
+
+# Preprocessing function
 def preprocess_image(image):
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     image = cv2.resize(image, IMG_SIZE)
     image = image / 255.0
     return np.expand_dims(image, axis=0)
 
+# Prediction function
 def predict_image(image):
     processed_image = preprocess_image(image)
     prediction = model.predict(processed_image)[0]
