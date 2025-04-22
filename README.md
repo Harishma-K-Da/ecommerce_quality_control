@@ -16,7 +16,7 @@ This project automates the quality control process of product images in an e-com
 - Python
 - TensorFlow / Keras
 - OpenCV
-- NumPy & Pandas
+- NumPy 
 - Matplotlib & Seaborn (for visualization)
 
 
@@ -64,6 +64,9 @@ License
 
 This project is for educational and demonstration purposes only.
 
+## Download the Model
 
+The fine-tuned model file is large, so it's hosted on Google Drive.  
+[Click here to download fine_tuned_model.h5](https://drive.google.com/file/d/10ZzSQ_Pn_2Xqai8ZYs3p_-_YRqmO6JlB/view?usp=drive_link)
 
 
