@@ -1,41 +1,43 @@
 import streamlit as st
-from PIL import Image
 import numpy as np
 import tensorflow as tf
-import cv2
+from PIL import Image
+import requests
+import os
+from io import BytesIO
+from pathlib import Path
 
-# Define constants
-IMG_SIZE = (224, 224)
-class_names = ['Blurry', 'Correct']  # Modify if needed
+# Download model from Google Drive (only once)
+MODEL_URL = "https://drive.google.com/uc?id=10ZzSQ_Pn_2Xqai8ZYs3p_-_YRqmO6JlB"
+MODEL_PATH = "fine_tuned_model.h5"
 
-# Load the fine-tuned model with the correct absolute path
-model_path = r"C:\Users\DELL\Desktop\e_commerce_quality_control\part_a\fine_tuned_model.h5"
-model = tf.keras.models.load_model(model_path)
+if not os.path.exists(MODEL_PATH):
+    st.info("Downloading model. Please wait...")
+    response = requests.get(MODEL_URL)
+    with open(MODEL_PATH, "wb") as f:
+        f.write(response.content)
+    st.success("Model downloaded!")
 
-# Preprocessing function
-def preprocess_image(image):
-    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-    image = cv2.resize(image, IMG_SIZE)
-    image = image / 255.0
-    return np.expand_dims(image, axis=0)
+# Load the model
+model = tf.keras.models.load_model(MODEL_PATH)
 
-# Prediction function
-def predict_image(image):
-    processed_image = preprocess_image(image)
-    prediction = model.predict(processed_image)[0]
-    predicted_class = class_names[np.argmax(prediction)]
-    confidence = float(np.max(prediction)) * 100
-    return predicted_class, confidence
+# UI
+st.title("E-commerce Product Image Quality Predictor")
+uploaded_file = st.file_uploader("Upload a Product Image", type=["jpg", "jpeg", "png"])
 
-# Streamlit UI
-st.title("E-commerce Product Image Quality Checker")
-
-uploaded_file = st.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"])
 if uploaded_file is not None:
-    image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    image = Image.open(uploaded_file).resize((224, 224))
+    st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    predicted_class, confidence = predict_image(image)
+    # Preprocess image
+    image_array = np.array(image) / 255.0
+    image_array = np.expand_dims(image_array, axis=0)
 
-    st.markdown(f"### Prediction: {predicted_class}")
-    st.markdown(f"### Confidence Score: {confidence:.2f}%")
+    # Prediction
+    prediction = model.predict(image_array)[0][0]
+    st.write(f"Prediction Score: {prediction:.2f}")
+
+    if prediction >= 0.5:
+        st.success("✅ Good Quality Image")
+    else:
+        st.warning("⚠ Poor Quality Image")
