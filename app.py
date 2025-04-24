@@ -2,42 +2,37 @@ import streamlit as st
 import numpy as np
 import tensorflow as tf
 from PIL import Image
-import requests
-import os
-from io import BytesIO
-from pathlib import Path
-
-# Download model from Google Drive (only once)
-MODEL_URL = "https://drive.google.com/uc?id=10ZzSQ_Pn_2Xqai8ZYs3p_-_YRqmO6JlB"
-MODEL_PATH = "fine_tuned_model.h5"
-
-if not os.path.exists(MODEL_PATH):
-    st.info("Downloading model. Please wait...")
-    response = requests.get(MODEL_URL)
-    with open(MODEL_PATH, "wb") as f:
-        f.write(response.content)
-    st.success("Model downloaded!")
 
 # Load the model
-model = tf.keras.models.load_model(MODEL_PATH)
+model = tf.keras.models.load_model("ecommerce_model.keras")  # Use your actual model filename
 
-# UI
-st.title("E-commerce Product Image Quality Predictor")
-uploaded_file = st.file_uploader("Upload a Product Image", type=["jpg", "jpeg", "png"])
+# UI setup
+st.set_page_config(page_title="Product Quality Checker", layout="centered")
+st.title("🛍 E-commerce Product Image Quality Checker")
+st.write("Upload a product image (shirt, gown, jeans, shoes, etc.) to evaluate its quality.")
+
+# Upload file
+uploaded_file = st.file_uploader("📤 Upload a product image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    image = Image.open(uploaded_file).resize((224, 224))
-    st.image(image, caption='Uploaded Image', use_column_width=True)
+    image = Image.open(uploaded_file).convert("RGB")
+    st.image(image, caption="🖼 Uploaded Image", use_column_width=True)
 
-    # Preprocess image
-    image_array = np.array(image) / 255.0
-    image_array = np.expand_dims(image_array, axis=0)
+    # Preprocessing
+    image = image.resize((150, 150))  # adapt size as per your model
+    img_array = np.array(image) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
 
     # Prediction
-    prediction = model.predict(image_array)[0][0]
-    st.write(f"Prediction Score: {prediction:.2f}")
+    prediction = model.predict(img_array)[0][0]
+    confidence = prediction * 100
 
-    if prediction >= 0.5:
-        st.success("✅ Good Quality Image")
+    # Emoji-based quality result
+    if confidence >= 80:
+        st.success(f"🌟 Looks Beautiful** – Confidence: {confidence:.2f}%")
+    elif confidence >= 75:
+        st.info(f"✅ Good Quality** – Confidence: {confidence:.2f}%")
+    elif confidence < 30:
+        st.error(f"❌ Damaged** – Confidence: {100 - confidence:.2f}%")
     else:
-        st.warning("⚠ Poor Quality Image")
+        st.warning(f"⚠ Average Quality** – Confidence: {confidence:.2f}%")
