@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
 
 python preprocessing.py
-python training.py
+python train.py
 
 5. Download the fine-tuned model:
 
