@@ -48,11 +48,9 @@ python training.py
 
 5. Download the fine-tuned model:
 
-
-
 You can download the fine-tuned model from the link below:
+[Click here to download fine_tuned_model.h5](https://drive.google.com/uc?export=download&id=10ZzSQ_Pn_2Xqai8ZYs3p_-_YRqmO6JlB)
 
-Click here to download fine_tuned_model.h5
 
 License
 
