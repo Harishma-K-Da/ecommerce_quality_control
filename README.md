@@ -48,8 +48,6 @@ python train.py
 
 5. Download the fine-tuned model:
 
-## Download the Model
-
 ### Download the Model
 
 The fine-tuned model file is large, so it's hosted on Google Drive.  
@@ -57,9 +55,19 @@ The fine-tuned model file is large, so it's hosted on Google Drive.
 
 [https://drive.google.com/uc?export=download&id=10ZzSQ_Pn_2Xqai8ZYs3p_-YRqmO6JlB]
 
+## Project Demo
+
+Click the link below to try the live app:
+*[E-commerce Product Image Quality Checker - Streamlit App](https://ecommercequalitycontrol-3d45tvcczgznr2mqqvrjvt.streamlit.app/)
+
+### Developed by
+
+Harishma K | [LinkedIn] http://www.linkedin.com/in/harishma03
+
 
 
 License
 
 This project is for educational and demonstration purposes only.
 
+Kindly avoid reusing this project without proper credit. Thanks!
