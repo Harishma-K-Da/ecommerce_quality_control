@@ -50,8 +50,14 @@ python train.py
 
 ## Download the Model
 
+### Download the Model
+
 The fine-tuned model file is large, so it's hosted on Google Drive.  
-[Click here to download fine_tuned_model.h5](https://drive.google.com/uc?export=download&id=10ZzSQ_Pn_2Xqai8ZYs3p_-_YRqmO6JlB)
+*To download the fine-tuned model, copy and paste the following link into your browser:*
+
+[https://drive.google.com/uc?export=download&id=10ZzSQ_Pn_2Xqai8ZYs3p_-YRqmO6JlB]
+
+
 
 License
 
