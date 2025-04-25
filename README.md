@@ -76,7 +76,7 @@ Trained model files are not uploaded to GitHub — you should place them manuall
 ## Download the Model
 
 The fine-tuned model file is large, so it's hosted on Google Drive.  
-[Click here to download product_damage_classifier.h5](https://drive.google.com/uc?export=download&id=10ZzSQ_Pn_2Xqai8ZYs3p_-_YRqmO6JlB)
+[Click here to download fine_tuned_model.h5](https://drive.google.com/file/d/10ZzSQ_Pn_2Xqai8ZYs3p_-_YRqmO6JlB/view?usp=drive_link)
 
 
 ---
